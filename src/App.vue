@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, reactive } from 'vue';
 import { useClipboard } from '@vueuse/core';
 import { useGeneratePassword } from './composables/useGeneratePassword';
 
@@ -8,6 +8,9 @@ const sentence = ref('');
 const password = ref('');
 const pending = ref(false);
 const error = ref(false);
+const options = reactive({
+  useNumbers: false,
+});
 function submit(): void {
   password.value = '';
   error.value = false;
@@ -20,7 +23,9 @@ function submit(): void {
   pending.value = true;
   setTimeout(() => {
     try {
-      password.value = useGeneratePassword(sentence.value);
+      password.value = useGeneratePassword(sentence.value, {
+        useNumbers: options.useNumbers,
+      });
       pending.value = false;
     } catch (err) {
       error.value = true;
@@ -70,6 +75,26 @@ watch(sentence, () => {
                   : ''
               "
             ></textarea>
+          </div>
+          <div class="flex justify-center">
+            <label
+              for="teal-toggle"
+              class="inline-flex relative items-center mr-5 cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                v-model="options.useNumbers"
+                id="teal-toggle"
+                class="sr-only peer"
+              />
+              <div
+                class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-teal-600"
+              ></div>
+              <span
+                class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Numbers</span
+              >
+            </label>
           </div>
           <button
             :disabled="error"
