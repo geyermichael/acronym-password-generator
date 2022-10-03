@@ -162,6 +162,14 @@ watch(sentence, () => {
         </div>
       </div>
     </section>
+    <footer class="container mx-auto flex justify-center">
+      <a
+        class="font-medium text-teal-600 dark:text-teal-500 hover:underline"
+        href="https://github.com/geyermichael/acronym-password-generator"
+      >
+        GitHub
+      </a>
+    </footer>
   </main>
 </template>
 
