@@ -11,6 +11,7 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@vueuse/core": "^9.3.0",
     "flowbite": "^1.5.3",
     "vue": "^3.2.37"
   },
